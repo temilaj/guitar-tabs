@@ -11,7 +11,7 @@ module.exports = {
     } catch(err) {
       // email already exisits
       res.status(400).send({
-        message: err.errors[0].message
+        error: err.errors[0].message
       })
     }
   },
