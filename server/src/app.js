@@ -11,22 +11,12 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/status', (req, res) => {
-  res.send({
-    message: 'Hello World',
-  });
-});
-
-app.post('/register', (req, res) => {
-  res.status(201).send({
-    message: `Hello ${req.body.email}!, your user was registered!`,
-  });
-});
+require('./routes')(app);
 
 sequelize.sync()
   .then(() => {
     app.listen(config.port, () => {
-      console.log('server started on  {config.port}!');
+      console.log(`server started on ${config.port}!`);
     });
   });
 
