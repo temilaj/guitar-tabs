@@ -2,9 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
+const { sequelize } = require('./models');
+const config = require('./config/config');
 
 const app = express();
-const port = process.env.PORT || 4200;
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());
@@ -22,6 +23,10 @@ app.post('/register', (req, res) => {
   });
 });
 
-app.listen(port, () => {
-  console.log('Hello World!');
-});
+sequelize.sync()
+  .then(() => {
+    app.listen(config.port, () => {
+      console.log('server started on  {config.port}!');
+    });
+  });
+
