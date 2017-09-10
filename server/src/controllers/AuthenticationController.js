@@ -8,6 +8,7 @@ module.exports = {
       res.status(201).send({
         message: `Hello ${req.body.email}! Your user was registered! Have fun`,
         user,
+        token: AuthenticationRepository.jwtSignUser(user.toJSON()),
       });
     } catch(err) {
       // email already exisits
@@ -22,7 +23,7 @@ module.exports = {
       const user = await User.findOne({
         where: {
           email,
-        }
+        },
       });
       if (!user) {
         // TODO: find out why pees use 403 here
@@ -30,7 +31,8 @@ module.exports = {
           error: 'The login information was incorrect'
         });
       }
-      const isPasswordValid = password === user.password;
+      // const isPasswordValid = password === user.password;
+      const isPasswordValid = await user.comparePassword(password);
       if (!isPasswordValid) {
         // TODO: find out why pees use 403 here
         res.status(401).send({
@@ -40,6 +42,7 @@ module.exports = {
       const userJson = user.toJSON();
       // const token = AuthenticationRepository.jwtSignUser(userJson);
       res.send({ 
+        message: 'login successful',
         user : userJson,
         token: AuthenticationRepository.jwtSignUser(userJson),
       });
