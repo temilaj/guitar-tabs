@@ -6,9 +6,9 @@
           <v-toolbar-title>Register</v-toolbar-title>
         </v-toolbar>
         <div class="pl-4 pr-4">
-          <v-text-field type="email" name="email" v-model="email" placeholder="email"></v-text-field>
+          <v-text-field type="email" label="email" name="email" v-model="email" placeholder="email"></v-text-field>
           <br>
-          <v-text-field type="password" name="password" v-model="password" placeholder="password"></v-text-field>
+          <v-text-field type="password" label="password" name="password" v-model="password" placeholder="password"></v-text-field>
           <br>
           <v-alert error value="true" v-if="error">
             {{ error }}

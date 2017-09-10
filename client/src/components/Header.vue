@@ -2,7 +2,18 @@
   <v-toolbar dark fixed class="primary">
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-toolbar-title class="white--text">Guitar Tabs</v-toolbar-title>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn flat @click="navigateTo('root')">Browse</v-btn>
+    </v-toolbar-items>
     <v-spacer></v-spacer>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <!-- <router-link to="/register"> -->
+        <v-btn flat @click="navigateTo('register')">
+            SignUp
+        </v-btn>
+      <!-- </router-link> -->
+      <v-btn flat @click="navigateTo('login')">Login</v-btn>
+    </v-toolbar-items>
     <v-btn dark icon>
       <v-icon>search</v-icon>
     </v-btn>
@@ -24,6 +35,12 @@
       return {
 
       };
+    },
+    methods: {
+      navigateTo(route) {
+        // console.log(route);
+        this.$router.push({ name: route });
+      },
     },
   };
 </script>
