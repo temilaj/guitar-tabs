@@ -18,6 +18,9 @@
       <!-- </router-link> -->
       <v-btn flat @click="navigateTo('login')">Login</v-btn>
     </v-toolbar-items>
+    <v-toolbar-items class="hidden-sm-and-down" v-if="$store.state.isUserLoggedIn">
+      <v-btn flat @click="logout()">Logout</v-btn>
+    </v-toolbar-items>
     <v-btn dark icon>
       <v-icon>search</v-icon>
     </v-btn>
@@ -44,6 +47,8 @@
       navigateTo(route) {
         // console.log(route);
         this.$router.push({ name: route });
+      },
+      logout() {
       },
     },
   };

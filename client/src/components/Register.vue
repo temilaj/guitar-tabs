@@ -50,6 +50,11 @@ export default {
       loading: false,
     };
   },
+  beforeMount() {
+    if (this.$store.state.isUserLoggedIn) {
+      this.$router.push({ name: 'root' });
+    }
+  },
   watch: {
     email(value) {
       console.log(`email has changed ${value}`);
@@ -69,7 +74,6 @@ export default {
         this.loading = false;
         this.$router.push({ name: 'root' });
       } catch (error) {
-        console.log(error.response);
         this.error = error.response.data.error;
         this.loading = false;
       }
