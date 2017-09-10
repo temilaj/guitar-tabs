@@ -13,8 +13,8 @@
           <v-alert error value="true" v-if="error" transition="scale-transition">
             {{ error }}
           </v-alert>
-          <v-alert success value="true" v-if="response" transition="scale-transition">
-            {{ response }}
+          <v-alert success value="true" v-if="success" transition="scale-transition">
+            {{ success }}
           </v-alert>
           <br>
           <v-btn
@@ -44,7 +44,7 @@ export default {
       email: '',
       password: '',
       error: '',
-      response: '',
+      success: '',
       loading: false,
     };
   },
@@ -53,15 +53,17 @@ export default {
       this.loading = true;
       try {
         const { email, password } = this;
-        // await authenticationService.register({ email, password });
         const response = await authenticationService.login({ email, password });
-        this.response = response.data.message;
+        console.log(response.data.token);
+        this.$store.dispatch('setToken', response.data.token);
+        this.$store.dispatch('setUser', response.data.user);
+        this.success = response.data.message;
         this.error = '';
         this.loading = false;
         this.$router.push({ name: 'root' });
       } catch (error) {
         console.log(error.response);
-        this.error = error.response.data.error;
+        // this.error = error.response.data.error;
         this.loading = false;
       }
     },

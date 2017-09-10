@@ -10,7 +10,7 @@
       <v-btn flat @click="navigateTo('root')">Browse</v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
-    <v-toolbar-items class="hidden-sm-and-down">
+    <v-toolbar-items class="hidden-sm-and-down" v-if="!$store.state.isUserLoggedIn">
       <!-- <router-link to="/register"> -->
         <v-btn flat @click="navigateTo('register')">
             SignUp
