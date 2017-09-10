@@ -10,10 +10,10 @@
           <br>
           <v-text-field type="password" label="password" name="password" v-model="password" placeholder="password"></v-text-field>
           <br>
-          <v-alert error value="true" v-if="error">
+          <v-alert error value="true" v-if="error" transition="scale-transition">
             {{ error }}
           </v-alert>
-          <v-alert success value="true" v-if="response">
+          <v-alert success value="true" v-if="response" transition="scale-transition">
             {{ response }}
           </v-alert>
           <br>
@@ -25,7 +25,7 @@
             :disabled="loading"
             class="white--text"
             >
-            Register
+            Login
           </v-btn>
           </div>
       </div>
@@ -56,7 +56,9 @@ export default {
         // await authenticationService.register({ email, password });
         const response = await authenticationService.login({ email, password });
         this.response = response.data.message;
+        this.error = '';
         this.loading = false;
+        this.$router.push({ name: 'root' });
       } catch (error) {
         console.log(error.response);
         this.error = error.response.data.error;

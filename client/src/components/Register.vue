@@ -6,28 +6,30 @@
           <v-toolbar-title>Register</v-toolbar-title>
         </v-toolbar>
         <div class="pl-4 pr-4">
-          <v-text-field type="email" label="email" name="email" v-model="email" placeholder="email"></v-text-field>
-          <br>
-          <v-text-field type="password" label="password" name="password" v-model="password" placeholder="password"></v-text-field>
-          <br>
-          <v-alert error value="true" v-if="error">
-            {{ error }}
-          </v-alert>
-          <v-alert success value="true" v-if="response">
-            {{ response }}
-          </v-alert>
-          <br>
-          <v-btn
-            success
-            :loading="loading"
-            @click.native="loader = 'loading'"
-            @click="register"
-            :disabled="loading"
-            class="white--text"
-            >
-            Register
-          </v-btn>
-          </div>
+          <form>
+            <v-text-field type="email" label="email" name="email" v-model="email" placeholder="email"></v-text-field>
+            <br>
+            <v-text-field type="password" label="password" name="password" v-model="password" placeholder="password" autocomplete="new-password"></v-text-field>
+            <br>
+            <v-alert error value="true" v-if="error" transition="scale-transition">
+              {{ error }}
+            </v-alert>
+            <v-alert success value="true" v-if="response" transition="scale-transition">
+              {{ response }}
+            </v-alert>
+            <br>
+            <v-btn
+              success
+              :loading="loading"
+              @click.native="loader = 'loading'"
+              @click="register"
+              :disabled="loading"
+              class="white--text"
+              >
+              Register
+            </v-btn>
+          </form>
+        </div>
       </div>
     </v-flex>
   </v-layout>
@@ -61,7 +63,9 @@ export default {
         // await authenticationService.register({ email, password });
         const response = await authenticationService.register({ email, password });
         this.response = response.data.message;
+        this.error = '';
         this.loading = false;
+        this.$router.push({ name: 'root' });
       } catch (error) {
         console.log(error.response);
         this.error = error.response.data.error;
