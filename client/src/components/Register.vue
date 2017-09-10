@@ -14,8 +14,8 @@
             <v-alert error value="true" v-if="error" transition="scale-transition">
               {{ error }}
             </v-alert>
-            <v-alert success value="true" v-if="response" transition="scale-transition">
-              {{ response }}
+            <v-alert success value="true" v-if="success" transition="scale-transition">
+              {{ success }}
             </v-alert>
             <br>
             <v-btn
@@ -46,7 +46,7 @@ export default {
       email: '',
       password: '',
       error: '',
-      response: '',
+      success: '',
       loading: false,
     };
   },
@@ -62,7 +62,9 @@ export default {
         const { email, password } = this;
         // await authenticationService.register({ email, password });
         const response = await authenticationService.register({ email, password });
-        this.response = response.data.message;
+        this.$store.dispatch('setToken', response.data.token);
+        this.$store.dispatch('setUser', response.data.user);
+        this.success = response.data.message;
         this.error = '';
         this.loading = false;
         this.$router.push({ name: 'root' });
@@ -76,7 +78,7 @@ export default {
     //   console.log('register button was clicked', this.email, this.password);
     //   const { email, password } = this;
     //   authenticationService.register({ email, password })
-    //     .then(response => console.log(response));
+    //     .then(success => console.log(response));
     // },
   },
   // mounted() {
