@@ -3,7 +3,7 @@
     <v-flex xs6 offset-xs3>
       <div class="white elevation-2">
         <v-toolbar dense class="primary" dark>
-          <v-toolbar-title>Register</v-toolbar-title>
+          <v-toolbar-title>Login</v-toolbar-title>
         </v-toolbar>
         <div class="pl-4 pr-4">
           <v-text-field type="email" label="email" name="email" v-model="email" placeholder="email"></v-text-field>
@@ -21,7 +21,7 @@
             success
             :loading="loading"
             @click.native="loader = 'loading'"
-            @click="register"
+            @click="login"
             :disabled="loading"
             class="white--text"
             >
@@ -48,18 +48,13 @@ export default {
       loading: false,
     };
   },
-  watch: {
-    email(value) {
-      console.log(`email has changed ${value}`);
-    },
-  },
   methods: {
-    async register() {
+    async login() {
       this.loading = true;
       try {
         const { email, password } = this;
         // await authenticationService.register({ email, password });
-        const response = await authenticationService.register({ email, password });
+        const response = await authenticationService.login({ email, password });
         this.response = response.data.message;
         this.loading = false;
       } catch (error) {
@@ -75,11 +70,6 @@ export default {
     //     .then(response => console.log(response));
     // },
   },
-  // mounted() {
-  //   setTimeout(() => {
-  //     this.email = 'helloworld';
-  //   }, 5000);
-  // },
 };
 
 </script>
