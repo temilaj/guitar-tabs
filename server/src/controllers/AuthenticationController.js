@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const AuthenticationRepository = require('../services/AuthenticationRepository');
 
 module.exports = {
   async register(req, res) {
@@ -37,7 +38,11 @@ module.exports = {
         });
       }
       const userJson = user.toJSON();
-      res.send({ user : userJson });
+      // const token = AuthenticationRepository.jwtSignUser(userJson);
+      res.send({ 
+        user : userJson,
+        token: AuthenticationRepository.jwtSignUser(userJson),
+      });
     } catch (error) {
       res.status(500).send({
         error: 'An error has occured trying to login.'

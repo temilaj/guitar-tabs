@@ -1,3 +1,7 @@
+require('dotenv').config();
+
+console.log(process.env.JWT_SECRET);
+
 module.exports = {
   port: process.env.PORT || 4200,
   db: {
@@ -9,5 +13,8 @@ module.exports = {
       host: process.env.HOST || 'localhost',
       storage: './guitartabs.sqlite'
     }
-  }
+  },
+  authentication: {
+    jwtSecret: process.env.JWT_SECRET,
+  },
 }
