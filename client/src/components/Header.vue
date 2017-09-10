@@ -1,7 +1,11 @@
 <template>
   <v-toolbar dark fixed class="primary">
     <v-toolbar-side-icon></v-toolbar-side-icon>
-    <v-toolbar-title class="white--text">Guitar Tabs</v-toolbar-title>
+    <v-toolbar-title class="white--text home">
+      <span @click="navigateTo('root')">
+        Guitar Tabs 
+      </span>    
+    </v-toolbar-title>
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn flat @click="navigateTo('root')">Browse</v-btn>
     </v-toolbar-items>
@@ -44,3 +48,9 @@
     },
   };
 </script>
+<style scoped>
+  .home {
+    cursor: pointer;
+    
+  }
+</style>
