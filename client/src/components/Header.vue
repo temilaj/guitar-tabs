@@ -7,7 +7,7 @@
       </span>    
     </v-toolbar-title>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat @click="navigateTo('root')">Browse</v-btn>
+      <v-btn flat @click="navigateTo('songs')">Browse</v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down" v-if="!$store.state.isUserLoggedIn">
@@ -49,6 +49,9 @@
         this.$router.push({ name: route });
       },
       logout() {
+        this.$store.dispatch('setToken', null);
+        this.$store.dispatch('setUser', null);
+        this.$router.push({ name: 'root' });
       },
     },
   };
