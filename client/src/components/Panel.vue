@@ -1,0 +1,31 @@
+<template>
+  <div class="white elevation-2">
+    <v-toolbar dense class="primary" dark>
+      <v-toolbar-title>{{ title }}</v-toolbar-title>
+    </v-toolbar>
+    <div class="pl-4 pr-4">
+      <slot>
+        No slot content defined
+      </slot>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+    };
+  },
+  props: [
+    'title',
+  ],
+  methods: {
+  },
+};
+
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+</style>

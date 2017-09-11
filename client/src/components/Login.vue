@@ -1,34 +1,29 @@
 <template>
   <v-layout>
     <v-flex xs6 offset-xs3>
-      <div class="white elevation-2">
-        <v-toolbar dense class="primary" dark>
-          <v-toolbar-title>Login</v-toolbar-title>
-        </v-toolbar>
-        <div class="pl-4 pr-4">
-          <v-text-field type="email" label="email" name="email" v-model="email" placeholder="email"></v-text-field>
-          <br>
-          <v-text-field type="password" label="password" name="password" v-model="password" placeholder="password"></v-text-field>
-          <br>
-          <v-alert error value="true" v-if="error" transition="scale-transition">
-            {{ error }}
-          </v-alert>
-          <v-alert success value="true" v-if="success" transition="scale-transition">
-            {{ success }}
-          </v-alert>
-          <br>
-          <v-btn
-            success
-            :loading="loading"
-            @click.native="loader = 'loading'"
-            @click="login"
-            :disabled="loading"
-            class="white--text"
-            >
-            Login
-          </v-btn>
-          </div>
-      </div>
+      <Panel title="Login">
+        <v-text-field type="email" label="email" name="email" v-model="email" placeholder="email"></v-text-field>
+        <br>
+        <v-text-field type="password" label="password" name="password" v-model="password" placeholder="password"></v-text-field>
+        <br>
+        <v-alert error value="true" v-if="error" transition="scale-transition">
+          {{ error }}
+        </v-alert>
+        <v-alert success value="true" v-if="success" transition="scale-transition">
+          {{ success }}
+        </v-alert>
+        <br>
+        <v-btn
+          success
+          :loading="loading"
+          @click.native="loader='loading'"
+          @click="login"
+          :disabled="loading"
+          class="white--text"
+          >
+          Login
+        </v-btn>
+      </Panel>
     </v-flex>
   </v-layout>
 </template>
@@ -36,7 +31,7 @@
 <script>
 // Controller
 import authenticationService from '@/services/authenticationService';
-// import authenticationService from '../services/authenticationService';
+import Panel from '@/components/Panel';
 
 export default {
   data() {
@@ -48,13 +43,20 @@ export default {
       loading: false,
     };
   },
+  beforeMount() {
+    if (this.$store.state.isUserLoggedIn) {
+      this.$router.push({ name: 'root' });
+    }
+  },
+  components: {
+    Panel,
+  },
   methods: {
     async login() {
       this.loading = true;
       try {
         const { email, password } = this;
         const response = await authenticationService.login({ email, password });
-        console.log(response.data.token);
         this.$store.dispatch('setToken', response.data.token);
         this.$store.dispatch('setUser', response.data.user);
         this.success = response.data.message;
@@ -62,8 +64,7 @@ export default {
         this.loading = false;
         this.$router.push({ name: 'root' });
       } catch (error) {
-        console.log(error.response);
-        // this.error = error.response.data.error;
+        this.error = error.response.data.error;
         this.loading = false;
       }
     },
