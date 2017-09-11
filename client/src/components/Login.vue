@@ -16,7 +16,7 @@
         <v-btn
           success
           :loading="loading"
-          @click.native="loader = 'loading'"
+          @click.native="loader='loading'"
           @click="login"
           :disabled="loading"
           class="white--text"
