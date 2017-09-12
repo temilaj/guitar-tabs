@@ -2,7 +2,7 @@
 <v-layout>
     <v-flex xs6 offset-xs3>
       <Panel title="Songs">
-        <div v-for="song in songs" :key="song.title">
+        <div v-for="song in songs" :key="song.id">
           {{ song.title }}
           {{ song.artist }}
           {{ song.album }}
@@ -23,7 +23,7 @@
       };
     },
     async mounted() {
-      this.songs = await SongsService.getAllSongs();
+      this.songs = (await SongsService.getAllSongs()).data.songs;
     },
     methods: {
     },
