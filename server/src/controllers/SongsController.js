@@ -26,5 +26,17 @@ module.exports = {
       })
     }
   },
+  async getSong(req, res) {
+    try {
+      const song = await Song.findById(req.params.songId);
+      res.status(200).send({
+        song,
+      });
+    } catch(err) {
+      res.status(500).send({
+        error: err.errors[0].message
+      })
+    }
+  },
 };
 

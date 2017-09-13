@@ -21,6 +21,10 @@ module.exports = (app) => {
     '/songs',
     SongsController.getAll,
   );
+  app.get(
+    '/songs/:songId',
+    SongsController.getSong,
+  );
   app.post(
     '/songs',
     SongsController.createSong,

@@ -8,4 +8,8 @@ export default {
   addSong(song) {
     return api().post('songs', song);
   },
+  getSong(songId) {
+    return api().get(`/songs/${songId}`);
+  },
+
 };

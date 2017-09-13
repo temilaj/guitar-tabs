@@ -5,7 +5,7 @@ import Register from '@/components/Register';
 import Login from '@/components/Login';
 import Songs from '@/components/Songs';
 import AddSong from '@/components/AddSong';
-import ViewSong from '@/components/ViewSong';
+import ViewSong from '@/components/ViewSong/ViewSong';
 
 Vue.use(Router);
 

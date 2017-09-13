@@ -7,15 +7,11 @@
             <v-icon dark>playlist_add</v-icon>
           </router-link>
         </div>
-        <!-- <div v-for="song in songs" :key="song.id">
-          {{ song.title }}
-          {{ song.artist }}
-          {{ song.album }}
-        </div> -->
         <v-list three-line>
           <template v-for="song in songs">
             <v-subheader :key="song.id" v-text="song.artist"></v-subheader>
             <v-divider :key="song.id" v-bind:inset="true"></v-divider>
+            
             <v-list-tile 
               avatar 
               v-bind:key="song.title" 
@@ -25,8 +21,12 @@
                   songId: song.id
                 }
               })">
-              <v-list-tile-avatar>
+              <v-list-tile-avatar v-if="song.albumImageUrl">
                 <img v-bind:src="song.albumImageUrl"/>
+              </v-list-tile-avatar>
+
+              <v-list-tile-avatar v-else>
+                <v-icon class="grey lighten-1 white--text">library_music</v-icon>
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title v-text="song.title"></v-list-tile-title>
