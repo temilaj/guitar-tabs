@@ -54,8 +54,8 @@
       this.songs = (await SongsService.getAllSongs()).data.songs;
     },
     methods: {
-      navigateTo() {
-
+      navigateTo(route) {
+        this.$router.push(route);
       },
     },
     components: {
