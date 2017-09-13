@@ -1,22 +1,22 @@
 <template>
   <v-layout>
-    <v-flex md4 class="ml-10" transition="slide-x-transition">
+    <v-flex md4 class="ml-10">
       <Panel title="Song Metadata">
         <form>
-          <v-text-field label="Title" v-model="song.title"></v-text-field>
-          <v-text-field label="Album" v-model="song.album"></v-text-field>
+          <v-text-field required :rules="[required]"  label="Title" v-model="song.title"></v-text-field>
+          <v-text-field required :rules="[required]"  label="Album" v-model="song.album"></v-text-field>
           <v-layout row wrap>
             <v-flex xs12 md5>
-              <v-text-field label="Genre" v-model="song.genre"></v-text-field>
+              <v-text-field required :rules="[required]" label="Genre" v-model="song.genre"></v-text-field>
             </v-flex>
             <v-flex xs12 offset-md1 md6>
-              <v-text-field label="Artist" v-model="song.artist"></v-text-field>
+              <v-text-field required :rules="[required]" label="Artist" v-model="song.artist"></v-text-field>
             </v-flex>
           </v-layout>  
-          <v-text-field label="YoutubeId" v-model="song.youtubeId"></v-text-field>
+          <v-text-field required :rules="[required]" label="YoutubeId" v-model="song.youtubeId"></v-text-field>
           <v-layout row wrap>
             <v-flex xs12 sm6 md4>
-              <v-text-field label="AlbumImageUrl" v-model="song.albumImageUrl"></v-text-field>
+              <v-text-field required :rules="[required]" label="AlbumImageUrl" v-model="song.albumImageUrl"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 md4 :if="song.albumImageUrl">
               <v-avatar
@@ -28,8 +28,8 @@
               </v-avatar>
             </v-flex>
           </v-layout>  
-          <v-text-field label="Lyrics" multi-line  v-model="song.lyrics"></v-text-field>
-          <v-text-field label="tab" multi-line v-model="song.tab"></v-text-field>
+          <v-text-field required :rules="[required]" label="Lyrics" multi-line  v-model="song.lyrics"></v-text-field>
+          <v-text-field required :rules="[required]" label="tab" multi-line v-model="song.tab"></v-text-field>
 
           <v-alert error value="true" v-if="error" transition="scale-transition">
             {{ error }}
@@ -105,8 +105,9 @@
           lyrics: '',
           tab: '',
         },
-        error: '',
-        success: '',
+        required: value => !!value || 'Required.',
+        error: null,
+        success: null,
         loading: false,
       };
     },
@@ -115,6 +116,13 @@
     },
     methods: {
       async create() {
+        this.error = null;
+        const areAllFieldsFilledIn = Object.keys(this.song)
+        .every(key => !!this.song[key]);
+        if (!areAllFieldsFilledIn) {
+          this.error = 'Please fill in all required fields';
+          return;
+        }
         try {
           const response = await SongsService.addSong(this.song);
           this.success = response.data.message;
