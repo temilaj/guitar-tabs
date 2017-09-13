@@ -1,35 +1,35 @@
 <template>
   <v-layout>
-    <v-flex xs4>
+    <v-flex md4 class="ml-10" transition="slide-x-transition">
       <Panel title="Song Metadata">
         <form>
-          <v-text-field label="Title" v-model="title"></v-text-field>
-          <v-text-field label="Album" v-model="album"></v-text-field>
+          <v-text-field label="Title" v-model="song.title"></v-text-field>
+          <v-text-field label="Album" v-model="song.album"></v-text-field>
           <v-layout row wrap>
             <v-flex xs12 md5>
-              <v-text-field label="Genre" v-model="genre"></v-text-field>
+              <v-text-field label="Genre" v-model="song.genre"></v-text-field>
             </v-flex>
             <v-flex xs12 offset-md1 md6>
-              <v-text-field label="Artist" v-model="artist"></v-text-field>
+              <v-text-field label="Artist" v-model="song.artist"></v-text-field>
             </v-flex>
           </v-layout>  
-          <v-text-field label="YoutubeId" v-model="youtubeId"></v-text-field>
+          <v-text-field label="YoutubeId" v-model="song.youtubeId"></v-text-field>
           <v-layout row wrap>
             <v-flex xs12 sm6 md4>
-              <v-text-field label="AlbumImageUrl" v-model="albumImageUrl"></v-text-field>
+              <v-text-field label="AlbumImageUrl" v-model="song.albumImageUrl"></v-text-field>
             </v-flex>
-            <v-flex xs12 sm6 md4>
+            <v-flex xs12 sm6 md4 :if="song.albumImageUrl">
               <v-avatar
               :tile=false
               size="80px"
               class="grey lighten-4"
               >
-                <img :src="albumImageUrl" alt="avatar">
+                <img :src="song.albumImageUrl" alt="avatar">
               </v-avatar>
             </v-flex>
           </v-layout>  
-          <v-text-field label="Lyrics" multi-line  v-model="lyrics"></v-text-field>
-          <v-text-field label="tab" multi-line v-model="tab"></v-text-field>
+          <v-text-field label="Lyrics" multi-line  v-model="song.lyrics"></v-text-field>
+          <v-text-field label="tab" multi-line v-model="song.tab"></v-text-field>
 
           <v-alert error value="true" v-if="error" transition="scale-transition">
             {{ error }}
@@ -51,6 +51,36 @@
         </form>
       </Panel>
     </v-flex>
+    <v-flex md6 offset-md1 v-if="song.title" transition="slide-x-transition">
+      <v-card>
+        <v-card-media
+          class="white--text"
+          height="500px"
+          :src="song.albumImageUrl"
+        >
+          <v-container fill-height fluid>
+            <v-layout fill-height>
+              <v-flex xs12 align-end flexbox>
+                <h2 class="song">{{ song.title }}</h2>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-media>
+        <v-card-title>
+          <div>
+            <span class="grey--text">{{ song.title }}</span><br>
+            <span>{{ song.album }}</span><br>
+            <span>{{ song.artist }}</span>
+          </div>
+        </v-card-title>
+        <v-card-actions>
+          <v-btn flat class="orange--text">
+            View on Youtube
+          </v-btn>
+          <v-btn flat class="orange--text">Explore</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
   </v-layout>
   <!-- <v-flex xs8>
      
@@ -60,18 +90,21 @@
 
 <script>
   import Panel from '@/components/Panel';
+  import SongsService from '@/services/SongService';
 
   export default {
     data() {
       return {
-        title: 'lanterns',
-        album: 'The Boy Who Cried Wolf',
-        genre: 'folk',
-        artist: 'passenger',
-        youtubeId: 'XxiFgNG8YPQ',
-        albumImageUrl: 'http://images.genius.com/5c630c0d3a3f59ae8f3693a5edf71972.1000x1000x1.jpg',
-        lyrics: '',
-        tab: '',
+        song: {
+          title: '',
+          album: '',
+          genre: '',
+          artist: '',
+          youtubeId: '',
+          albumImageUrl: '',
+          lyrics: '',
+          tab: '',
+        },
         error: '',
         success: '',
         loading: false,
@@ -81,8 +114,17 @@
       Panel,
     },
     methods: {
-      create() {
-        console.log('creating');
+      async create() {
+        try {
+          const response = await SongsService.addSong(this.song);
+          this.success = response.data.message;
+          this.error = '';
+          this.loading = false;
+          this.$router.push({ name: 'songs' });
+        } catch (error) {
+          this.error = error.response.data.error;
+          this.loading = false;
+        }
       },
     },
   };

@@ -4,7 +4,8 @@ module.exports = {
   async createSong(req, res) {
     try {
       const song = await Song.create(req.body);
-      res.status(200).send({
+      res.status(201).send({
+        message: `${song.title} added successfully`,
         song,
       });
     } catch(err) {
