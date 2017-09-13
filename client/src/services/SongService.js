@@ -5,4 +5,7 @@ export default {
   getAllSongs() {
     return api().get('songs');
   },
+  addSong(song) {
+    return api().post('songs', song);
+  },
 };
