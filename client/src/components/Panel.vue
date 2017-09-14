@@ -5,7 +5,7 @@
       <v-spacer></v-spacer>
       <slot name="action"/>
     </v-toolbar>
-    <div class="pl-4 pr-4">
+    <div>
       <slot>
         No slot content defined
       </slot>

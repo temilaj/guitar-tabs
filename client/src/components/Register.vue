@@ -32,7 +32,7 @@
         </div>
       </div> -->
       <Panel title="Register">
-        <form>
+        <form class="pl-3 pr-3">
           <v-text-field type="email" label="email" name="email" v-model="email"></v-text-field>
           <br>
           <v-text-field type="password" label="password" name="password" v-model="password" autocomplete="new-password"></v-text-field>

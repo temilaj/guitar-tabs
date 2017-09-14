@@ -1,9 +1,7 @@
 <template>
   <v-flex md7>
     <Panel>
-      <v-card>
-      <youtube v-if="song" :video-id="song.youtubeId"></youtube>
-    </v-card>
+      <div>{{lyrics}}</div>
     </Panel>
   </v-flex>
 </template>
@@ -16,8 +14,11 @@
       Panel,
     },
     props: [
-      'song',
+      'lyrics',
     ],
+    mounted() {
+      // console.log(lyrics);
+    },
   };
 </script>
 
