@@ -8,8 +8,10 @@ export default {
   addSong(song) {
     return api().post('songs', song);
   },
+  saveSong(song) {
+    return api().put(`/songs/${song.id}`, song);
+  },
   getSong(songId) {
     return api().get(`/songs/${songId}`);
   },
-
 };

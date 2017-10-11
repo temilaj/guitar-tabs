@@ -59,7 +59,8 @@
         </v-card>
       </v-flex> -->
     </v-layout>
-    <v-layout>
+    <v-layout class="mt-3">
+      <tab :tab="song.tab"/>
       <lyrics :lyrics="song.lyrics"/>
     </v-layout>
   </div>
@@ -68,6 +69,7 @@
 <script>
   import Panel from '@/components/Panel';
   import Lyrics from '@/components/ViewSong/Lyrics';
+  import Tab from '@/components/ViewSong/Tab';
   import SongMetadata from '@/components/ViewSong/SongMetadata';
   import YouTube from '@/components/ViewSong/YouTube';
   import SongsService from '@/services/SongService';
@@ -97,6 +99,7 @@
       SongMetadata,
       YouTube,
       Lyrics,
+      Tab,
     },
     async mounted() {
       try {

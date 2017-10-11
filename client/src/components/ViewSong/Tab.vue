@@ -1,7 +1,7 @@
 <template>
   <v-flex md7>
-    <Panel title="Lyrics">
-      <div>{{lyrics}}</div>
+    <Panel title="Tab">
+      <div>{{ tab }}</div>
     </Panel>
   </v-flex>
 </template>
@@ -14,7 +14,7 @@
       Panel,
     },
     props: [
-      'lyrics',
+      'tab',
     ],
     mounted() {
       // console.log(lyrics);

@@ -26,7 +26,9 @@
         <v-btn flat class="orange--text">
           View on Youtube
         </v-btn>
-        <v-btn flat class="orange--text">Explore</v-btn>
+        <v-btn flat class="orange--text" 
+        @click="navigateTo({name: 'song-edit', params: { songId: song.id }})">
+        Edit</v-btn>
       </v-card-actions>
     </v-card>
     </Panel>
@@ -43,5 +45,10 @@
     props: [
       'song',
     ],
+    methods: {
+      navigateTo(route) {
+        this.$router.push(route);
+      },
+    },
   };
 </script>
