@@ -2,8 +2,13 @@ import api from '@/services/api';
 // import api from './api';
 
 export default {
-  getAllSongs() {
-    return api().get('songs');
+  getSongs(queryString) {
+    // return api().get('songs');
+    return api().get('songs', {
+      params: {
+        search: queryString,
+      },
+    });
   },
   addSong(song) {
     return api().post('songs', song);
@@ -13,5 +18,12 @@ export default {
   },
   getSong(songId) {
     return api().get(`/songs/${songId}`);
+  },
+  search(queryString) {
+    return api().get('songs', {
+      params: {
+        search: queryString,
+      },
+    });
   },
 };

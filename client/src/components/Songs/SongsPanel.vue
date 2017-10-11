@@ -45,12 +45,21 @@
         songs: [],
       };
     },
-    async mounted() {
-      this.songs = (await SongsService.getAllSongs()).data.songs;
-    },
+    // async mounted() {
+    //   this.songs = (await SongsService.getSongs()).data.songs;
+    // },
     methods: {
       navigateTo(route) {
         this.$router.push(route);
+      },
+    },
+    watch: {
+      '$route.query.search': {
+        immediate: true,
+        async handler(value) {
+          this.songs = (await SongsService.getSongs(value)).data.songs;
+          console.log(this.songs);
+        },
       },
     },
   };
