@@ -33,7 +33,7 @@
 <script>
 // Controller
 import authenticationService from '@/services/authenticationService';
-import Panel from '@/components/Panel';
+// import Panel from '@/components/Panel';
 
 export default {
   data() {
@@ -50,9 +50,9 @@ export default {
       this.$router.push({ name: 'root' });
     }
   },
-  components: {
-    Panel,
-  },
+  // components: {
+  //   Panel,
+  // },
   methods: {
     async login() {
       this.loading = true;

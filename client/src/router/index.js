@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Hello from '@/components/Hello';
 import Register from '@/components/Register';
 import Login from '@/components/Login';
-import Songs from '@/components/Songs';
+import Songs from '@/components/Songs/Index';
 import AddSong from '@/components/AddSong';
 import ViewSong from '@/components/ViewSong/ViewSong';
 import EditSong from '@/components/EditSong';

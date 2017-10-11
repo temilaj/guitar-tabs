@@ -67,7 +67,6 @@
 </template>
 
 <script>
-  import Panel from '@/components/Panel';
   import Lyrics from '@/components/ViewSong/Lyrics';
   import Tab from '@/components/ViewSong/Tab';
   import SongMetadata from '@/components/ViewSong/SongMetadata';
@@ -95,7 +94,6 @@
       };
     },
     components: {
-      Panel,
       SongMetadata,
       YouTube,
       Lyrics,

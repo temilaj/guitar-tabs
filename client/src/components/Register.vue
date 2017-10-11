@@ -62,7 +62,6 @@
 
 <script>
 // Controller
-import Panel from '@/components/Panel';
 import authenticationService from '@/services/authenticationService';
 // import authenticationService from '../services/authenticationService';
 
@@ -81,14 +80,11 @@ export default {
       this.$router.push({ name: 'root' });
     }
   },
-  watch: {
-    email(value) {
-      console.log(`email has changed ${value}`);
-    },
-  },
-  components: {
-    Panel,
-  },
+  // watch: {
+  //   email(value) {
+  //     console.log(`email has changed ${value}`);
+  //   },
+  // },
   methods: {
     async register() {
       this.loading = true;

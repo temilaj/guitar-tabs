@@ -89,7 +89,6 @@
 </template>
 
 <script>
-  import Panel from '@/components/Panel';
   import SongsService from '@/services/SongService';
 
   export default {
@@ -110,9 +109,6 @@
         success: null,
         loading: false,
       };
-    },
-    components: {
-      Panel,
     },
     async mounted() {
       try {
@@ -135,8 +131,6 @@
           return;
         }
         try {
-          console.log('updating song');
-          console.log(this.song);
           const response = await SongsService.saveSong(this.song);
           this.success = response.data.message;
           this.error = '';
