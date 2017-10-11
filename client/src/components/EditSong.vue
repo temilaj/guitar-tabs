@@ -42,11 +42,11 @@
             success
             :loading="loading"
             @click.native="loader = 'loading'"
-            @click="create"
+            @click="save"
             :disabled="loading"
             class="white--text"
             >
-            Create
+            save song
           </v-btn>
         </form>
       </Panel>
@@ -114,9 +114,20 @@
     components: {
       Panel,
     },
+    async mounted() {
+      try {
+        const songId = this.$store.state.route.params.songId;
+        const song = (await SongsService.getSong(songId)).data.song;
+        this.song = song;
+      } catch (error) {
+        this.error = error.response.data.error;
+        this.loading = false;
+      }
+    },
     methods: {
-      async create() {
+      async save() {
         this.error = null;
+        this.loading = true;
         const areAllFieldsFilledIn = Object.keys(this.song)
         .every(key => !!this.song[key]);
         if (!areAllFieldsFilledIn) {
@@ -124,11 +135,13 @@
           return;
         }
         try {
-          const response = await SongsService.addSong(this.song);
+          console.log('updating song');
+          console.log(this.song);
+          const response = await SongsService.saveSong(this.song);
           this.success = response.data.message;
           this.error = '';
           this.loading = false;
-          this.$router.push({ name: 'songs' });
+          this.$router.push({ name: 'song', params: { songId: this.song.id } });
         } catch (error) {
           this.error = error.response.data.error;
           this.loading = false;

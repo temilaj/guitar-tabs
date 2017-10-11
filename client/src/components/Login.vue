@@ -2,27 +2,29 @@
   <v-layout>
     <v-flex xs6 offset-xs3>
       <Panel title="Login">
-        <v-text-field type="email" label="email" name="email" v-model="email" placeholder="email"></v-text-field>
-        <br>
-        <v-text-field type="password" label="password" name="password" v-model="password" placeholder="password"></v-text-field>
-        <br>
-        <v-alert error value="true" v-if="error" transition="scale-transition">
-          {{ error }}
-        </v-alert>
-        <v-alert success value="true" v-if="success" transition="scale-transition">
-          {{ success }}
-        </v-alert>
-        <br>
-        <v-btn
-          success
-          :loading="loading"
-          @click.native="loader='loading'"
-          @click="login"
-          :disabled="loading"
-          class="white--text"
-          >
-          Login
-        </v-btn>
+        <form class="pl-3 pr-3">
+          <v-text-field type="email" label="email" name="email" v-model="email" placeholder="email"></v-text-field>
+          <br>
+          <v-text-field type="password" label="password" name="password" v-model="password" placeholder="password"></v-text-field>
+          <br>
+          <v-alert error value="true" v-if="error" transition="scale-transition">
+            {{ error }}
+          </v-alert>
+          <v-alert success value="true" v-if="success" transition="scale-transition">
+            {{ success }}
+          </v-alert>
+          <br>
+          <v-btn
+            success
+            :loading="loading"
+            @click.native="loader='loading'"
+            @click="login"
+            :disabled="loading"
+            class="white--text"
+            >
+            Login
+          </v-btn>
+        </form>
       </Panel>
     </v-flex>
   </v-layout>

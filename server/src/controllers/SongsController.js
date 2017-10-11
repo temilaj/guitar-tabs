@@ -14,11 +14,40 @@ module.exports = {
       })
     }
   },
+  async updateSong(req, res) {
+    try {
+      const song = await Song.update(req.body,{ 
+        where: {
+          id: req.params.songId
+        }
+      });
+      res.status(200).send({
+        message: `${song.title} updated successfully`,
+        song,
+      });
+    } catch(err) {
+      res.status(500).send({
+        error: err.errors[0].message
+      })
+    }
+  },
   async getAll(req, res) {
     try {
       const songs = await Song.findAll();
       res.status(200).send({
         songs,
+      });
+    } catch(err) {
+      res.status(500).send({
+        error: err.errors[0].message
+      })
+    }
+  },
+  async getSong(req, res) {
+    try {
+      const song = await Song.findById(req.params.songId);
+      res.status(200).send({
+        song,
       });
     } catch(err) {
       res.status(500).send({
