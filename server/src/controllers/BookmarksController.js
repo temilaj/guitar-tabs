@@ -1,7 +1,7 @@
 const { Bookmark } = require('../models');
 
 module.exports = {
-  async getAll(req, res) {
+  async getBookMark(req, res) {
     try {
       const { songId, userId } = req.query;
       if (songId) {
@@ -32,11 +32,12 @@ module.exports = {
       })
     }
   },
-  async createBookmark(req, res) {
+  async addBookmark(req, res) {
     try {
-      const Bookmark = await Bookmark.create(req.body);
+      const bookmark = req.body;
+      await Bookmark.create(bookmark);
       res.status(201).send({
-        message: `${Bookmark.title} added successfully`,
+        message: `bookmark added successfully`,
         Bookmark,
       });
     } catch(err) {
@@ -45,28 +46,29 @@ module.exports = {
       })
     }
   },
-  async updateBookmark(req, res) {
+  // async updateBookmark(req, res) {
+  //   try {
+  //     const Bookmark = await Bookmark.update(req.body,{ 
+  //       where: {
+  //         id: req.params.BookmarkId
+  //       }
+  //     });
+  //     res.status(200).send({
+  //       message: `${Bookmark.title} updated successfully`,
+  //       Bookmark,
+  //     });
+  //   } catch(err) {
+  //     res.status(500).send({
+  //       error: err.errors[0].message
+  //     })
+  //   }
+  // },
+  async deleteBookmark(req, res) {
     try {
-      const Bookmark = await Bookmark.update(req.body,{ 
-        where: {
-          id: req.params.BookmarkId
-        }
-      });
+      const bookmark = await Bookmark.findById(req.params.BookmarkId);
+      await bookmark.destroy();
       res.status(200).send({
-        message: `${Bookmark.title} updated successfully`,
-        Bookmark,
-      });
-    } catch(err) {
-      res.status(500).send({
-        error: err.errors[0].message
-      })
-    }
-  },
-  async getBookmark(req, res) {
-    try {
-      const Bookmark = await Bookmark.findById(req.params.BookmarkId);
-      res.status(200).send({
-        Bookmark,
+        message: 'bookmark deleted successfully',
       });
     } catch(err) {
       res.status(500).send({

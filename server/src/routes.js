@@ -36,6 +36,14 @@ module.exports = (app) => {
   );
   app.get(
     '/bookmarks',
-    BookmarksController.getAll,
+    BookmarksController.getBookMark,
+  );
+  app.post(
+    '/bookmarks',
+    BookmarksController.addBookmark,
+  );
+  app.delete(
+    '/bookmarks/:bookmarkId',
+    BookmarksController.deleteBookmark,
   );
 };

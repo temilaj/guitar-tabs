@@ -29,6 +29,12 @@
         <v-btn flat class="orange--text" 
         :to="{name: 'song-edit', params: { songId: song.id }}">
         Edit</v-btn>
+        <v-btn flat icon color="indigo" @click="bookmark" v-if="isUserLoggedIn && !this.isBookMarked">
+          <v-icon dark>playlist_add</v-icon>
+        </v-btn> 
+        <v-btn flat icon color="indigo" @click="bookmark" v-if="isUserLoggedIn && this.isBookMarked">
+          <v-icon >playlist_add</v-icon>
+        </v-btn> 
       </v-card-actions>
     </v-card>
     </Panel>
@@ -36,14 +42,58 @@
 </template>
 
 <script>
-  export default {
-    props: [
-      'song',
-    ],
-    methods: {
-      navigateTo(route) {
-        this.$router.push(route);
-      },
+import { mapState } from 'vuex';
+import BookmarksService from '@/services/BookmarksService';
+
+export default {
+  data() {
+    return {
+      isBookMarked: false,
+    };
+  },
+  props: [
+    'song',
+  ],
+  computed: {
+    ...mapState([
+      'isUserLoggedIn',
+    ]),
+  },
+  async mounted() {
+    if (!this.isUserLoggedIn) {
+      return;
+    }
+    const bookmark = (await BookmarksService.getBookmark({
+      songId: this.song.id,
+      userId: this.$store.state.user.id,
+    })).data.bookmark;
+    this.isBookMarked = !!bookmark;
+    console.log('bookmark', this.isBookMarked);
+  },
+  methods: {
+    navigateTo(route) {
+      this.$router.push(route);
     },
-  };
+    async bookmark() {
+      try {
+        await BookmarksService.addBookmark({
+          songId: this.song.id,
+          userId: this.$store.state.user.id,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async unBookmark() {
+      try {
+        await BookmarksService.removeBookmark({
+          songId: this.song.id,
+          userId: this.$store.state.user.id,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+};
 </script>
