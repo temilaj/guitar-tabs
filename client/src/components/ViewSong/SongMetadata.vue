@@ -27,7 +27,7 @@
           View on Youtube
         </v-btn>
         <v-btn flat class="orange--text" 
-        @click="navigateTo({name: 'song-edit', params: { songId: song.id }})">
+        :to="{name: 'song-edit', params: { songId: song.id }}">
         Edit</v-btn>
       </v-card-actions>
     </v-card>

@@ -2,17 +2,22 @@
   <v-toolbar dark fixed class="primary">
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-toolbar-title class="white--text home">
-      <span @click="navigateTo('root')">
+      <!-- <span @click="navigateTo('root')">
         Guitar Tabs 
-      </span>    
+      </span>     -->
+      <router-link
+        tag="span"
+        :to="{ name: 'root' }">
+        Guitar Tabs 
+      </router-link>
     </v-toolbar-title>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat @click="navigateTo('songs')">Browse</v-btn>
+      <v-btn flat :to="{ name: 'songs'}">Browse</v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down" v-if="!$store.state.isUserLoggedIn">
       <!-- <router-link to="/register"> -->
-        <v-btn flat @click="navigateTo('register')">
+        <v-btn flat :to="{ name: 'register'}">
             SignUp
         </v-btn>
       <!-- </router-link> -->
@@ -44,14 +49,14 @@
       };
     },
     methods: {
-      navigateTo(route) {
-        // console.log(route);
-        this.$router.push({ name: route });
-      },
       logout() {
         this.$store.dispatch('setToken', null);
         this.$store.dispatch('setUser', null);
         this.$router.push({ name: 'root' });
+      },
+      navigateTo(route) {
+        // console.log(route);
+        this.$router.push({ name: route });
       },
     },
   };

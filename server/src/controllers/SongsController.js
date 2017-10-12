@@ -33,7 +33,23 @@ module.exports = {
   },
   async getAll(req, res) {
     try {
-      const songs = await Song.findAll();
+      let songs = null;
+      const queryString = req.query.search;
+      if (queryString) {
+        songs = await Song.findAll({
+          where: {
+            $or: [
+              'title', 'artist', 'genre', 'album'
+            ].map(key => ({
+              [key]: {
+                $like: `%${queryString}%`
+              }
+            }))
+          }
+        })
+      } else {
+        songs = await Song.findAll();
+      }
       res.status(200).send({
         songs,
       });

@@ -64,7 +64,7 @@ export default {
         this.success = response.data.message;
         this.error = '';
         this.loading = false;
-        this.$router.push({ name: 'root' });
+        this.$router.push({ name: 'song' });
       } catch (error) {
         this.error = error.response.data.error;
         this.loading = false;
