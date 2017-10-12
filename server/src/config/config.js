@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 
 module.exports = {
   port: process.env.PORT || 4200,
@@ -9,7 +10,7 @@ module.exports = {
     options: {
       dialect: process.env.DIALECT || 'sqlite',
       host: process.env.HOST || 'localhost',
-      storage: './guitartabs.sqlite'
+      storage: path.resolve(__dirname, '../../guitartabs.sqlite')
     }
   },
   authentication: {
